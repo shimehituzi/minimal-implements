@@ -28,8 +28,6 @@ export const Form: React.FC = () => {
   }
 
   return (
-    <React.Fragment>
-      <Editor onChange={onAceValeuFunc} value={aceValue} />
-    </React.Fragment>
+    <Editor onChange={onAceValeuFunc} value={aceValue} />
   )
 }
