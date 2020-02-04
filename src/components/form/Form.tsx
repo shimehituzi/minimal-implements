@@ -13,15 +13,20 @@ export const Form: React.FC = () => {
   }
 
   const returnArray = (lines: string[], row: number, col: number):string[] => {
-    const beforelines: string[] = valueArray.slice(0, row)
     const beforewords: string = valueArray.slice(row, row + 1)[0].slice(0, col)
     const afterwords: string = valueArray.slice(row, row + 1)[0].slice(col)
+    const beforelines: string[] = valueArray.slice(0, row)
     const afterlines: string[] = valueArray.slice(row + 1)
-    const startwords: string = beforewords + lines.slice(0, 1)
-    const endworrds: string =  lines.slice(-1) +afterwords
-    const middlelines: string[] = lines.slice(1, -1)
-    const thislines: string[] = [startwords, ...middlelines, endworrds]
-    return beforelines.concat(thislines, afterlines)
+    if (lines.length > 1) {
+      const startwords: string = beforewords + lines.slice(0, 1)
+      const endworrds: string =  lines.slice(-1) +afterwords
+      const middlelines: string[] = lines.slice(1, -1)
+      const thislines: string[] = [startwords, ...middlelines, endworrds]
+      return beforelines.concat(thislines, afterlines)
+    } else {
+      const thisline: string = beforewords + lines[0] + afterwords
+      return [...beforelines, thisline, ...afterlines]
+    }
   }
  
   const onAceValeuFunc = (value:string , event: any) => {
@@ -37,7 +42,7 @@ export const Form: React.FC = () => {
         )})
         setAceValue(aceValue + returnAceValueText(filteredLines))
         const row: number = event.start.row
-        const col: number = event.start.col
+        const col: number = event.start.column
         setValueArray(returnArray(filteredLines, row, col))
       }
     }
