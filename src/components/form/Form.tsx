@@ -21,7 +21,7 @@ export const Form: React.FC = () => {
     }
   }
  
-  const onAceValeuFunc = (fieldVal:string , event: any) => {
+  const onChangeFunc = (fieldVal: string , event: any) => {
     if (event.action === 'insert') {
       const lines :string[] = event.lines
       if (lines.every((str) => str.match(/^[\n\x20-\x7e]*$/) !== null)) {
@@ -33,6 +33,10 @@ export const Form: React.FC = () => {
         const row: number = event.start.row
         const col: number = event.start.column
         setInputSourceCode(connectAsciiSouceCode(asciiLines, row, col))
+        alert(
+          "sorry this form don't allow non-ASCIi character input.\n\n" +
+          "The characters that can be entered in this form are Only the characters corresponding to '\\x0a' and '\\x20' to '\\x7e' in hexadecimal ASCII code."
+        )
       }
     }
     if (event.action === 'remove') {
@@ -43,6 +47,6 @@ export const Form: React.FC = () => {
   const inputSourceCodeString = inputSourceCode.join('\n')
 
   return (
-    <Editor onChange={onAceValeuFunc} value={inputSourceCodeString}/>
+    <Editor onChange={onChangeFunc} value={inputSourceCodeString} style={{display: 'inline-block', width: '400px'}}/>
   )
 }
