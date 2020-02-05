@@ -10,34 +10,35 @@ interface OwnProps extends RouteComponentProps<{id: string}> {}
 type Props = OwnProps
 
 const GameContainer: React.FC<Props> = props => {
-  const gameTypedText = useSelector<AppState, string>((appState) => appState.state.gameTypedText)
-  const gameRemainingText = useSelector<AppState, string>((appState) => appState.state.gameRemainingText)
+  const typedCode = useSelector<AppState, string>((appState) => appState.state.game.typedCode)
+  const remainingCode = useSelector<AppState, string>((appState) => appState.state.game.remainingCode)
 
   const dispatch = useDispatch()
-  const handleSetGameTypedText = useCallback(
-    (newGameTypedText: string) => dispatch(Actions.setGameTypedText(newGameTypedText)), [dispatch]
+  const handleSetTypedCode = useCallback(
+    (typedCode: string) => dispatch(Actions.setTypedCode(typedCode)), [dispatch]
   )
-  const handleSetGameRemainingText = useCallback(
-    (newGameRemainingText: string) => dispatch(Actions.setGameRemainingText(newGameRemainingText)) , [dispatch]
+  const handleSetRemainingCode = useCallback(
+    (remainingCode: string) => dispatch(Actions.setRemainingCode(remainingCode)) , [dispatch]
   )
 
-  const sourceCodes = useSelector<AppState, Array<{id:number,name:string,description:string}>>((appState) => appState.state.sourceCodes)
+  const sourceCodes = useSelector<AppState, AppState['state']['read']['sourceCodes']>((appState) => appState.state.read.sourceCodes)
 
   useEffect(() => {
     const id = Number(props.match.params.id)
-    const typingText = sourceCodes.find(x => x.id === id)?.description
-    handleSetGameTypedText('')
+    const typingText = sourceCodes.find(x => x.id === id)?.code.join('\n')
+    handleSetTypedCode('')
     if (typingText !== undefined) {
-      handleSetGameRemainingText(typingText)
+      handleSetRemainingCode(typingText)
     } else {
-      handleSetGameRemainingText('Source code is not found')
+      handleSetRemainingCode('Source code is not found')
     }
-  }, [handleSetGameRemainingText, handleSetGameTypedText, props.match.params.id, sourceCodes])
+  }, [handleSetRemainingCode, handleSetTypedCode, props.match.params.id, sourceCodes])
 
-  const _props = { gameTypedText, gameRemainingText, handleSetGameTypedText, handleSetGameRemainingText  }
+  const _props = { typedCode, remainingCode }
+  const _handler = { handleSetTypedCode, handleSetRemainingCode }
 
   return (
-    <Game {..._props} />
+    <Game {..._props} {..._handler} />
   )
 }
 
