@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useCallback} from 'react'
 import { CodeForm } from './CodeForm'
 import { CodeCommentForm } from './CodeCommentForm'
 
@@ -29,7 +29,7 @@ export const Create: React.FC = () => {
   const onChangeNameFunc = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormValue({ ...formValue, name: e.target.value })
   }
-  
+
   const onChangeDescriptionFunc = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setFormValue({ ...formValue, description: e.target.value })
   }
@@ -38,6 +38,13 @@ export const Create: React.FC = () => {
     e.preventDefault()
   }
 
+  const setCode = useCallback(
+    (code: string[]) => setFormValue({ ...formValue, code: code }), [formValue]
+  )
+
+  const setCodeComment = useCallback(
+    (codeComment: string[]) => setFormValue({ ...formValue, codeComment: codeComment }), [formValue]
+  )
 
 
   return (
@@ -53,8 +60,8 @@ export const Create: React.FC = () => {
       </label>
       <br/><br/>
       <div style={{display: 'inline-block', width: 1000}}>
-        <CodeForm/>
-        <CodeCommentForm/>
+        <CodeForm setCode={setCode}/>
+        <CodeCommentForm setCodeComment={setCodeComment}/>
       </div>
       <br/><br/>
       <label>
