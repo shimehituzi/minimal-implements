@@ -1,7 +1,6 @@
 import React, {useState} from 'react'
 import { CreateSourceCode } from './Create'
 import { ReadSourceCode } from './Read'
-import { FormContainer } from '../../containers/form/FormContainer'
 
 
 interface OwnProps {
@@ -40,7 +39,6 @@ export const Home: React.FC<Props> = props => {
           handleSubmitSourceCode={handleSubmitSourceCode}
         /> 
       }
-      <FormContainer/>
     </React.Fragment>
   )
 }
