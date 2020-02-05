@@ -18,7 +18,25 @@ const intialFromValue: FormValue = {
   codeComment: [''],
 }
 
-export const Create: React.FC = () => {
+interface OwnProps {
+  id: number
+  name: string
+  description: string
+  code: string[]
+  codeComment: string[]
+}
+
+interface Handler {
+  handleSetCreateName: Function
+  handleSetCreateDescription: Function
+  handleSetCreateCode: Function
+  handleSetCreateCodeComment: Function
+  handleCreateGame: Function
+}
+
+type Props = OwnProps
+
+export const Create: React.FC<Props> = () => {
   const [formValue, setFormValue] = useState<FormValue>(intialFromValue)
 
 
@@ -34,10 +52,6 @@ export const Create: React.FC = () => {
     setFormValue({ ...formValue, description: e.target.value })
   }
 
-  const onSubmitFunc = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-  }
-
   const setCode = useCallback(
     (code: string[]) => setFormValue({ ...formValue, code: code }), [formValue]
   )
@@ -46,6 +60,9 @@ export const Create: React.FC = () => {
     (codeComment: string[]) => setFormValue({ ...formValue, codeComment: codeComment }), [formValue]
   )
 
+  const onSubmitFunc = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+  }
 
   return (
     <form onSubmit={onSubmitFunc}>

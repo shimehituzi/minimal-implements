@@ -35,10 +35,9 @@ export const initialState: State = {
 const actionCreator = actionCreatorFactory()
 
 export const Actions = {
-  setCreateId: actionCreator<number>('ACTION_SET_CREATE_ID'),
   setCreateName: actionCreator<string>('ACTION_SET_CREATE_NAME'),
   setCreateDescription: actionCreator<string>('ACTION_SET_CREATE_DESCRIPTION'),
   setCreateCode: actionCreator<string[]>('ACTION_SET_CREATE_CODE'),
   setCreateCodeComment: actionCreator<string[]>('ACTION_SET_CREATE_CODE_COMMENT'),
-  setReadSourceCode: actionCreator('ACTION_SET_READ_SOURCE_CODE'),
+  createGame: actionCreator('ACTION_CREATE_GAEM'),
 }

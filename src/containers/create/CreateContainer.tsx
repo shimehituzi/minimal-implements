@@ -3,7 +3,13 @@ import { Create } from '../../components/create/Create'
 
 const CreateContainer: React.FC = () => {
   return (
-    <Create/>
+    <Create
+      id={0}
+      name={''}
+      description={''}
+      code={['']}
+      codeComment={['']}
+    />
   )
 }
 
