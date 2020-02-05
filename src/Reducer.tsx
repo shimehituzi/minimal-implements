@@ -22,3 +22,9 @@ export const Reducer = reducerWithInitialState(initialState)
       nextID: state.nextID + 1
     }
   })
+  .case(Actions.setTypedCode, (state, typedCode) => {
+    return { ...state, game: { ...state.game, typedCode: typedCode } }
+  })
+  .case(Actions.setRemainingCode, (state, remainingCode) => {
+    return { ...state, game: { ...state.game, remainingCode: remainingCode } }
+  })
