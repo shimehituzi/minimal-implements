@@ -54,8 +54,15 @@ export const Game: React.FC<Props> = props => {
 
   const cursorView = nextChar !== '\n' ? nextChar : '⏎\n'
 
+  const preStyle: React.CSSProperties = {
+    display: 'inline-block',
+    width: '50%',
+    verticalAlign: 'top',
+    outline: 'none'
+  }
+
   return (
-    <pre tabIndex={0} onKeyDown={onKeyEventFunc} style={{ backgroundColor: '#455a64', fontSize: '35px' }}>
+    <pre tabIndex={0} onKeyDown={onKeyEventFunc} style={preStyle}>
       <span style={{ color: 'white' }}>{props.typedCode}</span>
       <span style={{ color: 'black', background: 'yellow' }}>{cursorView}</span>
       <span style={{ color: 'gray' }}>{queueText}</span>

@@ -1,9 +1,10 @@
 import React, { useEffect, useCallback } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import { RouteComponentProps } from 'react-router-dom'
 import { AppState } from '../../Store'
 import { Actions } from '../../Actions'
 import { Game } from '../../components/game/Game'
-import { RouteComponentProps } from 'react-router-dom'
+import { GameComment } from '../../components/game/GameComment'
 
 interface OwnProps extends RouteComponentProps<{id: string}> {}
 
@@ -22,6 +23,9 @@ const GameContainer: React.FC<Props> = props => {
   )
 
   const sourceCodes = useSelector<AppState, AppState['state']['read']['sourceCodes']>((appState) => appState.state.read.sourceCodes)
+  const tmp = sourceCodes.find(x => x.id === Number(props.match.params.id))?.codeComment.join('\n')
+  const codeComment = tmp !== undefined ? tmp : 'ソースコードが見つかりませんでした'
+
 
   useEffect(() => {
     const id = Number(props.match.params.id)
@@ -37,8 +41,23 @@ const GameContainer: React.FC<Props> = props => {
   const _props = { typedCode, remainingCode }
   const _handler = { handleSetTypedCode, handleSetRemainingCode }
 
+  const divStyle: React.CSSProperties = {
+    display: 'inline-block',
+    width: '100%',
+    verticalAlign: 'top',
+    backgroundColor: '#455a64',
+    fontSize: 20,
+    padding: 20,
+  }
+
+
   return (
-    <Game {..._props} {..._handler} />
+    <React.Fragment>
+      <div style={divStyle}>
+        <Game {..._props} {..._handler} />
+        <GameComment codeComment={codeComment}/>
+      </div>
+    </React.Fragment>
   )
 }
 
