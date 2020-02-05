@@ -14,16 +14,27 @@ export const GameComment: React.FC<Props> = props => {
     color: 'white',
   }
 
+  const mappingFunc = (line:string, index:number, arr:string[]) => {
+    if ( arr.length - 1 === index ) {
+      return (
+        <React.Fragment key={index}>
+          <span style={{color: "gray"}}>{1 + index + "   "}</span>
+          <span>{line}</span>
+        </React.Fragment>
+      )
+    } else {
+      return (
+        <React.Fragment key={index}>
+          <span style={{color: "gray"}}>{1 + index + "   "}</span>
+          <span>{line + '\n'}</span>
+        </React.Fragment>
+      )
+    }
+  }
+
   return (
     <pre style={preStyle}>
-      { props.codeComment.map((line, index) => {
-        return (
-          <React.Fragment key={index}>
-            <span style={{color: "gray"}}>{1 + index + "   "}</span>
-            <span>{line}</span>
-          </React.Fragment>
-        )
-      }) }
+      { props.codeComment.map((v, i, a) => mappingFunc(v, i, a)) }
     </pre>
   )
 }
