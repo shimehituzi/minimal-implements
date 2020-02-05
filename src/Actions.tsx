@@ -1,6 +1,7 @@
 import { actionCreatorFactory } from 'typescript-fsa'
 
 export interface State {
+  nextID: number
   create: {
     id: number
     name: string
@@ -20,6 +21,7 @@ export interface State {
 }
 
 export const initialState: State = {
+  nextID: 0,
   create: {
     id: -1,
     name: '',
@@ -39,5 +41,5 @@ export const Actions = {
   setDescription: actionCreator<string>('ACTION_SET_CREATE_DESCRIPTION'),
   setCode: actionCreator<string[]>('ACTION_SET_CREATE_CODE'),
   setCodeComment: actionCreator<string[]>('ACTION_SET_CREATE_CODE_COMMENT'),
-  createGame: actionCreator('ACTION_CREATE_GAEM'),
+  createGame: actionCreator<State['create']>('ACTION_CREATE_GAEM'),
 }

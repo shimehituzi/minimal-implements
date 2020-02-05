@@ -14,3 +14,11 @@ export const Reducer = reducerWithInitialState(initialState)
   .case(Actions.setCodeComment, (state, codeComment) => {
     return { ...state, create: { ...state.create, codeComment: codeComment } }
   })
+  .case(Actions.createGame, (state, data) => {
+    return {
+      ...state,
+      create: initialState.create,
+      read: { ...state.read, sourceCodes: [ ...state.read.sourceCodes, data ] },
+      nextID: state.nextID + 1
+    }
+  })

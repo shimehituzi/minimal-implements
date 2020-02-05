@@ -7,6 +7,7 @@ interface OwnProps {
   description: string
   code: string[]
   codeComment: string[]
+  nextID: number
 }
 
 interface Handler {
@@ -14,6 +15,7 @@ interface Handler {
   handleSetDescription: Function
   handleSetCode: Function
   handleSetCodeComment: Function
+  handleCreateGame: Function
 }
 
 type Props = OwnProps & Handler
@@ -33,6 +35,13 @@ export const Create: React.FC<Props> = props => {
 
   const onSubmitFunc = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    props.handleCreateGame({
+      id: props.nextID,
+      name: props.name,
+      description: props.description,
+      code: props.code,
+      codeComment: props.codeComment
+    })
   }
 
   return (
