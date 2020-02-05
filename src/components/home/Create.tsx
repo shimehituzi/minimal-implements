@@ -1,4 +1,5 @@
 import React from 'react'
+import { FormContainer } from '../../containers/form/FormContainer'
 
 interface OwnProps {
   name: string
@@ -49,6 +50,8 @@ export const CreateSourceCode: React.FC<Props> = props => {
         Name: <br/>
         <input type="text" value={props.name} onChange={onSetNameFunc} size={40} onKeyDown={onKeyDownFunc}/>
       </label>
+      <br/><br/>
+      <FormContainer/>
       <br/><br/>
       <label>
         <input type="submit" value={"Create"}/>
