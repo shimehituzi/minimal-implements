@@ -60,8 +60,8 @@ export const Create: React.FC = () => {
       </label>
       <br/><br/>
       <div style={{display: 'inline-block', width: 1000}}>
-        <CodeForm setCode={setCode}/>
-        <CodeCommentForm setCodeComment={setCodeComment}/>
+        <CodeForm value={formValue.code} setCode={setCode}/>
+        <CodeCommentForm value={formValue.codeComment} setCodeComment={setCodeComment}/>
       </div>
       <br/><br/>
       <label>
