@@ -1,7 +1,9 @@
 import React from 'react'
 
-export const Home: React.FC = () => {
+const Root: React.FC = () => {
   return (
     <React.Fragment/>
   )
 }
+
+export default Root
