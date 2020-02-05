@@ -1,7 +1,16 @@
-import React from 'react'
+import React, { useState } from 'react'
+import Editor from 'react-ace'
 
-export const CodeCommentForm: React.FC = () => {
+export const CodeCommentForm:React.FC = () => {
+  const [inputComment, setinputComment] = useState<string[]>([''])
+
+  const onChangeFunc = (feildVal: string) => {
+    setinputComment(feildVal.split('\n'))
+  }
+
+  const inputCommentString: string =  inputComment.join('\n')
+
   return (
-    <React.Fragment/>
+    <Editor onChange={onChangeFunc} value={inputCommentString} style={{display: 'inline-block', width: 500}}/>
   )
 }

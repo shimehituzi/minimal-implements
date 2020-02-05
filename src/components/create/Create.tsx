@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
-// import { CodeForm } from './CodeForm'
-// import { CodeCommentForm } from './CodeCommentForm'
+import { CodeForm } from './CodeForm'
+import { CodeCommentForm } from './CodeCommentForm'
 
 interface FormValue {
   id: number
@@ -51,6 +51,11 @@ export const Create: React.FC = () => {
         Description: <br/>
         <textarea value={formValue.description} onChange={onChangeDescriptionFunc} cols={100} rows={20}/>
       </label>
+      <br/><br/>
+      <div style={{display: 'inline-block', width: 1000}}>
+        <CodeForm/>
+        <CodeCommentForm/>
+      </div>
       <br/><br/>
       <label>
         <input type="submit" value={"Create"}/>
