@@ -19,8 +19,8 @@ export interface State {
     }[]
   }
   game: {
-    typedCode: string
-    remainingCode: string
+    typedCode: string[]
+    remainingCode: string[]
   }
 }
 
@@ -37,8 +37,8 @@ export const initialState: State = {
     sourceCodes: []
   },
   game: {
-    typedCode: '',
-    remainingCode: ''
+    typedCode: [''],
+    remainingCode: ['']
   }
 }
 
@@ -50,6 +50,6 @@ export const Actions = {
   setCode: actionCreator<string[]>('ACTION_SET_CREATE_CODE'),
   setCodeComment: actionCreator<string[]>('ACTION_SET_CREATE_CODE_COMMENT'),
   createGame: actionCreator<State['create']>('ACTION_CREATE_GAEM'),
-  setTypedCode: actionCreator<string>('ACTION_SET_TYPED_CODE'),
-  setRemainingCode: actionCreator<string>('ACTION_SET_REMAINING_CODE')
+  setTypedCode: actionCreator<string[]>('ACTION_SET_TYPED_CODE'),
+  setRemainingCode: actionCreator<string[]>('ACTION_SET_REMAINING_CODE')
 }
