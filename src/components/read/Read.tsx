@@ -23,7 +23,7 @@ export const Read: React.FC<Props> = props => {
     <React.Fragment>
       { props.sourceCodes.map((val) => {
         return (
-          <div key={val.id} style={{backgroundColor: "#FFE0B2", borderRadius: 30, margin: 20}}>
+          <div key={val.id} style={{backgroundColor: "#FFFDE7", borderRadius: 30, margin: 20}}>
             <Link to={'/Game/' + val.id}><h3 style={headStyle}>{val.name}</h3></Link>
             <p style={{color: "#BDBDBD", marginLeft: 40}}>{val.description}</p><br/>
           </div>
