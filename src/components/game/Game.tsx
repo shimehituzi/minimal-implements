@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 
 interface OwnProps {
   typedCode: string[]
@@ -13,12 +13,6 @@ interface Handler {
 type Props = OwnProps & Handler
 
 export const Game: React.FC<Props> = props => {
-
-  useEffect(() => {
-    props.handleSetTypedCode(['this', '  is', '    typed', 'code'])
-    props.handleSetRemainingCode(['this', '    is', '  remaining', 'code'])
-  }, [props])
-
   const preStyle: React.CSSProperties = {
     display: 'inline-block',
     width: '50%',

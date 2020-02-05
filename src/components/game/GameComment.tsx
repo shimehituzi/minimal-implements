@@ -14,22 +14,15 @@ export const GameComment: React.FC<Props> = props => {
     color: 'white',
   }
 
-  const mappingFunc = (line:string, index:number, arr:string[]) => {
-    if ( arr.length - 1 === index ) {
-      return (
-        <React.Fragment key={index}>
-          <span style={{color: "gray"}}>{1 + index + "   "}</span>
-          <span>{line}</span>
-        </React.Fragment>
-      )
-    } else {
-      return (
-        <React.Fragment key={index}>
-          <span style={{color: "gray"}}>{1 + index + "   "}</span>
-          <span>{line + '\n'}</span>
-        </React.Fragment>
-      )
-    }
+  const jsxElem = (cr: string, line: string, index: number) => (
+    <React.Fragment key={index}>
+      <span style={{color: "gray"}}>{1 + index + "   "}</span>
+      <span>{line + cr}</span>
+    </React.Fragment>
+  )
+
+  const mappingFunc = (line: string, index: number, arr: string[]) => {
+    return arr.length-1 === index ? jsxElem('', line, index) : jsxElem('\n', line, index)
   }
 
   return (
