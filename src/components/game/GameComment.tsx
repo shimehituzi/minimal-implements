@@ -1,7 +1,7 @@
 import React from 'react'
 
 interface OwnProps {
-  codeComment: string
+  codeComment: string[]
 }
 
 type Props = OwnProps
@@ -16,7 +16,14 @@ export const GameComment: React.FC<Props> = props => {
 
   return (
     <pre style={preStyle}>
-      { props.codeComment }
+      { props.codeComment.map((line, index) => {
+        return (
+          <React.Fragment key={index}>
+            <span style={{color: "gray"}}>{1 + index + "   "}</span>
+            <span>{line}</span>
+          </React.Fragment>
+        )
+      }) }
     </pre>
   )
 }

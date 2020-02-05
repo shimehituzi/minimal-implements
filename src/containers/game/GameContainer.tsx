@@ -23,8 +23,8 @@ const GameContainer: React.FC<Props> = props => {
   )
 
   const sourceCodes = useSelector<AppState, AppState['state']['read']['sourceCodes']>((appState) => appState.state.read.sourceCodes)
-  const tmp = sourceCodes.find(x => x.id === Number(props.match.params.id))?.codeComment.join('\n')
-  const codeComment = tmp !== undefined ? tmp : 'ソースコードが見つかりませんでした'
+  const tmp = sourceCodes.find(x => x.id === Number(props.match.params.id))?.codeComment
+  const codeComment = tmp !== undefined ? tmp : ['ソースコードが見つかりませんでした']
 
 
   useEffect(() => {
