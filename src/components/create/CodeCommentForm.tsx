@@ -1,24 +1,22 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Editor from 'react-ace'
 
 interface OwnProps {
+  value: string[]
   setCodeComment: Function
 }
 
 type Props = OwnProps
 
 export const CodeCommentForm:React.FC<Props> = props => {
-  const [inputComment, setinputComment] = useState<string[]>([''])
-
   const onChangeFunc = (feildVal: string) => {
     const codeComment = feildVal.split('\n')
-    setinputComment(codeComment)
     props.setCodeComment(codeComment)
   }
 
-  const inputCommentString: string =  inputComment.join('\n')
+  const value: string = props.value.join('\n')
 
   return (
-    <Editor onChange={onChangeFunc} value={inputCommentString} style={{display: 'inline-block', width: 500}}/>
+    <Editor onChange={onChangeFunc} value={value} style={{display: 'inline-block', width: 500}}/>
   )
 }
