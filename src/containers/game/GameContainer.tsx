@@ -13,7 +13,7 @@ type Props = OwnProps
 const GameContainer: React.FC<Props> = props => {
   const sourceCodes = useSelector<AppState, AppState['state']['read']>((appState) => appState.state.read)
 
-  const maybeCode = sourceCodes.find(x => x.id === Number(props.match.params.id))?.codeComment
+  const maybeCode = sourceCodes.find(x => x.id === Number(props.match.params.id))?.code
   const typingCode = maybeCode !== undefined ? maybeCode : ['The source code is not found']
 
   const maybeComment = sourceCodes.find(x => x.id === Number(props.match.params.id))?.codeComment
@@ -22,11 +22,13 @@ const GameContainer: React.FC<Props> = props => {
   const cursorPos = useSelector<AppState, AppState['state']['game']['cursorPos']>(
     (appState) => appState.state.game.cursorPos
   )
+  const gameOver = useSelector<AppState, boolean>((appState) => appState.state.game.gameOver)
 
   const dispatch = useDispatch()
   const handleSetCursorPos = (cursorPos: AppState['state']['game']['cursorPos']) => {
     dispatch(Actions.setCursorPos(cursorPos))
   }
+  const handleSetGameOver = (gameOver: boolean) => dispatch(Actions.setGameOver(gameOver))
 
   const divStyle: React.CSSProperties = {
     display: 'inline-block',
@@ -40,7 +42,13 @@ const GameContainer: React.FC<Props> = props => {
   return (
     <React.Fragment>
       <div style={divStyle}>
-        <Game typingCode={typingCode} cursorPos={cursorPos} handleSetCursorPos={handleSetCursorPos}/>
+        <Game
+          typingCode={typingCode}
+          cursorPos={cursorPos}
+          gameOver={gameOver}
+          handleSetCursorPos={handleSetCursorPos}
+          handleSetGameOver={handleSetGameOver}
+        />
         <GameComment codeComment={codeComment}/>
       </div>
     </React.Fragment>

@@ -12,6 +12,7 @@ export interface State {
   read: Array<State['create']>
   game: {
     cursorPos: {row: number, col: number}
+    gameOver: boolean
   }
 }
 
@@ -26,7 +27,8 @@ export const initialState: State = {
   },
   read: [],
   game: {
-    cursorPos: {row: 0, col: 0} 
+    cursorPos: {row: 0, col: 0},
+    gameOver: false
   }
 }
 
@@ -38,5 +40,6 @@ export const Actions = {
   setCode: actionCreator<string[]>('ACTION_SET_CREATE_CODE'),
   setCodeComment: actionCreator<string[]>('ACTION_SET_CREATE_CODE_COMMENT'),
   createGame: actionCreator<State['create']>('ACTION_CREATE_GAEM'),
-  setCursorPos: actionCreator<State['game']['cursorPos']>('ACTION_SET_CURSOR_POS')
+  setCursorPos: actionCreator<State['game']['cursorPos']>('ACTION_SET_CURSOR_POS'),
+  setGameOver: actionCreator<boolean>('ACTION_SET_GAME_OVER')
 }

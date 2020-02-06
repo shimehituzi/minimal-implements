@@ -25,3 +25,6 @@ export const Reducer = reducerWithInitialState(initialState)
   .case(Actions.setCursorPos, (state, cursorPos) => {
     return { ...state, game: { ...state.game, cursorPos: cursorPos } }
   })
+  .case(Actions.setGameOver, (state, gameOver) => {
+    return { ...state, game: { ...state.game, gameOver: gameOver } }
+  })
