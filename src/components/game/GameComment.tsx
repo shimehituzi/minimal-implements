@@ -14,9 +14,16 @@ export const GameComment: React.FC<Props> = props => {
     color: 'white',
   }
 
+  const styleNum: React.CSSProperties = {
+    display: 'inline-block',
+    textAlign: 'right',
+    minWidth: '60px',
+    color: 'gray'
+  }
+
   const jsxElem = (cr: string, line: string, index: number) => (
     <React.Fragment key={index}>
-      <span style={{color: "gray"}}>{1 + index + "   "}</span>
+      <span style={styleNum}>{1 + index + "   "}</span>
       <span>{line + cr}</span>
     </React.Fragment>
   )
