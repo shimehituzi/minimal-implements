@@ -4,9 +4,7 @@ import { AppState } from '../../Store'
 import { Read } from '../../components/read/Read'
 
 const ReadContainer: React.FC = () => {
-  const sourceCodes = useSelector<AppState, AppState['state']['read']['sourceCodes']>(
-    (appState) => appState.state.read.sourceCodes
-  )
+  const sourceCodes = useSelector<AppState, AppState['state']['read']>( (appState) => appState.state.read)
 
   return (
     <Read sourceCodes={sourceCodes}/>

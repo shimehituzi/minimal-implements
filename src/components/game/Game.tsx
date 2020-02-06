@@ -1,13 +1,13 @@
 import React from 'react'
+import { AppState } from '../../Store'
 
 interface OwnProps {
-  typedCode: string[]
-  remainingCode: string[]
+  typingCode: string[]
+  cursorPos: AppState['state']['game']['cursorPos']
 }
 
 interface Handler {
-  handleSetTypedCode: (typedCode: string[]) => (void)
-  handleSetRemainingCode: (remainingCode: string[]) => (void)
+  handleSetCursorPos: Function
 }
 
 type Props = OwnProps & Handler
@@ -20,13 +20,7 @@ export const Game: React.FC<Props> = props => {
     outline: 'none'
   }
 
-  const mappingFuncTyped = (line:string, index:number) => {
-    return (
-      <span style={{ color: 'white' }} key={index}>{line + '\n'}</span>
-    )
-  }
-
-  const mappingFuncRemain = (line:string, index:number, arr:string[]) => {
+  const mappingFunc = (line:string, index:number, arr:string[]) => {
     if ( arr.length - 1 === index ) {
       return <span style={{color: 'gray'}} key={index}>{line}</span> 
     } else {
@@ -36,10 +30,7 @@ export const Game: React.FC<Props> = props => {
 
   return (
     <pre tabIndex={0} style={preStyle}>
-      { props.typedCode.slice(0, -1).map((v, i) => mappingFuncTyped(v, i)) }
-      <span style={{ color: 'black', background: 'yellow' }}>
-      </span>
-      { props.remainingCode.slice(1).map((v, i, a) => mappingFuncRemain(v, i, a)) }
+      { props.typingCode.map((v, i, a) => mappingFunc(v, i, a)) }
     </pre>
   )
 }
