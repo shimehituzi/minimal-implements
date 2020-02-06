@@ -3,7 +3,7 @@ import { State } from '../../Actions'
 import {Link} from 'react-router-dom'
 
 interface OwnProps {
-  sourceCodes: State['read']['sourceCodes']
+  sourceCodes: State['read']
 }
 
 type Props = OwnProps

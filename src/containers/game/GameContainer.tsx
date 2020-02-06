@@ -11,35 +11,31 @@ interface OwnProps extends RouteComponentProps<{id: string}> {}
 type Props = OwnProps
 
 const GameContainer: React.FC<Props> = props => {
-  const typedCode = useSelector<AppState, string>((appState) => appState.state.game.typedCode)
-  const remainingCode = useSelector<AppState, string>((appState) => appState.state.game.remainingCode)
+  const sourceCodes = useSelector<AppState, AppState['state']['read']>((appState) => appState.state.read)
+
+  const maybeCode = sourceCodes.find(x => x.id === Number(props.match.params.id))?.code
+  const typingCode = maybeCode !== undefined ? maybeCode : ['The source code is not found']
+
+  const maybeComment = sourceCodes.find(x => x.id === Number(props.match.params.id))?.codeComment
+  const codeComment = maybeComment !== undefined ? maybeComment : ['ソースコードが見つかりませんでした']
+
+  const cursorPos = useSelector<AppState, AppState['state']['game']['cursorPos']>(
+    (appState) => appState.state.game.cursorPos
+  )
+  const gameOver = useSelector<AppState, boolean>((appState) => appState.state.game.gameOver)
 
   const dispatch = useDispatch()
-  const handleSetTypedCode = useCallback(
-    (typedCode: string) => dispatch(Actions.setTypedCode(typedCode)), [dispatch]
+  const handleSetCursorPos = useCallback(
+    (cursorPos: AppState['state']['game']['cursorPos']) => dispatch(Actions.setCursorPos(cursorPos)), [dispatch]
   )
-  const handleSetRemainingCode = useCallback(
-    (remainingCode: string) => dispatch(Actions.setRemainingCode(remainingCode)) , [dispatch]
+  const handleSetGameOver = useCallback(
+    (gameOver: boolean) => dispatch(Actions.setGameOver(gameOver)), [dispatch]
   )
-
-  const sourceCodes = useSelector<AppState, AppState['state']['read']['sourceCodes']>((appState) => appState.state.read.sourceCodes)
-  const tmp = sourceCodes.find(x => x.id === Number(props.match.params.id))?.codeComment.join('\n')
-  const codeComment = tmp !== undefined ? tmp : 'ソースコードが見つかりませんでした'
-
 
   useEffect(() => {
-    const id = Number(props.match.params.id)
-    const typingText = sourceCodes.find(x => x.id === id)?.code.join('\n')
-    handleSetTypedCode('')
-    if (typingText !== undefined) {
-      handleSetRemainingCode(typingText)
-    } else {
-      handleSetRemainingCode('Source code is not found')
-    }
-  }, [handleSetRemainingCode, handleSetTypedCode, props.match.params.id, sourceCodes])
-
-  const _props = { typedCode, remainingCode }
-  const _handler = { handleSetTypedCode, handleSetRemainingCode }
+    handleSetCursorPos({row: 0, col: 0})
+    handleSetGameOver(false)
+  }, [handleSetGameOver, handleSetCursorPos])
 
   const divStyle: React.CSSProperties = {
     display: 'inline-block',
@@ -50,11 +46,16 @@ const GameContainer: React.FC<Props> = props => {
     padding: 20,
   }
 
-
   return (
     <React.Fragment>
       <div style={divStyle}>
-        <Game {..._props} {..._handler} />
+        <Game
+          typingCode={typingCode}
+          cursorPos={cursorPos}
+          gameOver={gameOver}
+          handleSetCursorPos={handleSetCursorPos}
+          handleSetGameOver={handleSetGameOver}
+        />
         <GameComment codeComment={codeComment}/>
       </div>
     </React.Fragment>

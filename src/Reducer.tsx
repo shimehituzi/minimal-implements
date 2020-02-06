@@ -18,13 +18,13 @@ export const Reducer = reducerWithInitialState(initialState)
     return {
       ...state,
       create: initialState.create,
-      read: { ...state.read, sourceCodes: [ ...state.read.sourceCodes, data ] },
+      read: [ ...state.read, data ],
       nextID: state.nextID + 1
     }
   })
-  .case(Actions.setTypedCode, (state, typedCode) => {
-    return { ...state, game: { ...state.game, typedCode: typedCode } }
+  .case(Actions.setCursorPos, (state, cursorPos) => {
+    return { ...state, game: { ...state.game, cursorPos: cursorPos } }
   })
-  .case(Actions.setRemainingCode, (state, remainingCode) => {
-    return { ...state, game: { ...state.game, remainingCode: remainingCode } }
+  .case(Actions.setGameOver, (state, gameOver) => {
+    return { ...state, game: { ...state.game, gameOver: gameOver } }
   })

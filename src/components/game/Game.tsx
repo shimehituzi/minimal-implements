@@ -1,58 +1,66 @@
 import React from 'react'
+import { AppState } from '../../Store'
 
 interface OwnProps {
-  typedCode: string
-  remainingCode: string
+  typingCode: string[]
+  cursorPos: AppState['state']['game']['cursorPos']
+  gameOver: boolean
 }
 
 interface Handler {
-  handleSetTypedCode: (typedCode: string) => (void)
-  handleSetRemainingCode: (remainingCode: string) => (void)
+  handleSetCursorPos: Function
+  handleSetGameOver: Function
 }
 
 type Props = OwnProps & Handler
 
 export const Game: React.FC<Props> = props => {
-  const nextChar = props.remainingCode.substring(0, 1)
-  const queueText = props.remainingCode.substring(1)
+  const getCursorChar = () => (
+    props.typingCode[props.cursorPos.row].slice(props.cursorPos.col, props.cursorPos.col+1)
+  )
 
-  const isEnter = (e: React.KeyboardEvent) => {
-    return (e.key === 'Enter' && nextChar === '\n')
+  const isEnter = (e: React.KeyboardEvent, cursorChar: string) => {
+    return (e.key === 'Enter' && cursorChar === '')
   }
 
-  const isTab = (e: React.KeyboardEvent) => {
-    return (e.key === 'Tab' && nextChar === ' ')
+  const lastLineEmpty = props.typingCode.slice(-1)[0] === ''
+
+  const lastline = {
+    row: props.typingCode.length-1, 
+    col: props.typingCode.slice(-1)[0].length-1
   }
 
-  const spaceCounter = (text: string, count: number): number => {
-    if (count >= 64) return count
-    if (text.substring(0, 1) === ' ') {
-      return spaceCounter(text.substring(1), count + 1)
-    } else {
-      return count
-    }
-  }
+  const isGameOver = () => (
+    props.cursorPos.row === lastline.row && props.cursorPos.col === lastline.col
+  )
 
-  const onKeyEventFunc = (e: React.KeyboardEvent<HTMLPreElement>) => {
-    if (e.key === nextChar || isEnter(e) || isTab(e)) {
-      e.preventDefault()
-      if (e.key.match(/^.$/) !== null) {
-        props.handleSetTypedCode(props.typedCode + e.key)
-        props.handleSetRemainingCode(queueText)
-      } else if (e.key === 'Enter') {
-        props.handleSetTypedCode(props.typedCode + '\n')
-        props.handleSetRemainingCode(queueText)
-      } else if (e.key === 'Tab') {
-        const count = spaceCounter(props.remainingCode, 0)
-        if (count >= 2) {
-          props.handleSetTypedCode(props.typedCode + ' '.repeat(count))
-          props.handleSetRemainingCode(props.remainingCode.substring(count))
+  const onSetCursorPosFunc = (e: React.KeyboardEvent<HTMLPreElement>) => {
+    if (!props.gameOver) {
+      const cursorChar = getCursorChar()
+      if (e.key === cursorChar || isEnter(e, cursorChar) ) {
+        e.preventDefault()
+        if (e.key.match(/^[\x20-\x7e]$/) !== null) {
+          props.handleSetCursorPos({
+            row: props.cursorPos.row,
+            col: props.cursorPos.col+1
+          })
+        } else if (e.key === 'Enter') {
+          props.handleSetCursorPos({
+            row: props.cursorPos.row+1,
+            col: 0
+          })
+          if (lastLineEmpty && props.cursorPos.row === lastline.row -1) {
+            props.handleSetGameOver(true)
+            alert('Finish')
+          }
+        }
+        if (isGameOver()) {
+          props.handleSetGameOver(true)
+          alert('Finish')
         }
       }
     }
   }
-
-  const cursorView = nextChar !== '\n' ? nextChar : '⏎\n'
 
   const preStyle: React.CSSProperties = {
     display: 'inline-block',
@@ -61,11 +69,56 @@ export const Game: React.FC<Props> = props => {
     outline: 'none'
   }
 
+  const styleNum: React.CSSProperties = {
+    display: 'inline-block',
+    textAlign: 'right',
+    minWidth: '60px',
+    color: 'gray'
+  }
+
+  const jsxElem = (last: boolean, line: string, index: number) => {
+    const row = props.cursorPos.row
+    const col = props.cursorPos.col
+    if (row > index) {
+      return (
+        <React.Fragment key={index}>
+          <span style={styleNum}>{1 + index + "   "}</span>
+          <span style={{color: 'white'}}>{line}</span>
+          <span>{last ? '' : '\n'}</span>
+        </React.Fragment>
+      )
+    } else if( row === index ) {
+      const beforeWords = line.slice(0, col)
+      const maybeCC = line.slice(col, col+1)
+      const cursorChar = maybeCC === "" && !last ? '↵' : maybeCC
+      const afterWords = line.slice(col+1)
+      return (
+        <React.Fragment key={index}>
+          <span style={styleNum}>{1 + index + "   "}</span>
+          <span style={{color: 'white'}}>{beforeWords}</span>
+          <span style={{color: 'black', background: 'yellow'}}>{cursorChar}</span>
+          <span style={{color: 'gray'}}>{afterWords}</span>
+          <span>{last ? '' : '\n'}</span>
+        </React.Fragment>
+      )
+    } else {
+      return (
+        <React.Fragment key={index}>
+          <span style={styleNum}>{1 + index + "   "}</span>
+          <span style={{color: 'gray'}}>{line}</span>
+          <span>{last ? '' : '\n'}</span>
+        </React.Fragment>
+      )
+    }
+  }
+
+  const mappingFunc = (line: string, index: number, arr: string[]) => {
+    return arr.length-1 === index ? jsxElem(true, line, index) : jsxElem(false, line, index)
+  }
+
   return (
-    <pre tabIndex={0} onKeyDown={onKeyEventFunc} style={preStyle}>
-      <span style={{ color: 'white' }}>{props.typedCode}</span>
-      <span style={{ color: 'black', background: 'yellow' }}>{cursorView}</span>
-      <span style={{ color: 'gray' }}>{queueText}</span>
+    <pre tabIndex={0} style={preStyle} onKeyDown={onSetCursorPosFunc}>
+      { props.typingCode.map((v, i, a) => mappingFunc(v, i, a)) }
     </pre>
   )
 }

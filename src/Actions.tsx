@@ -9,18 +9,10 @@ export interface State {
     code: string[]
     codeComment: string[]
   }
-  read: {
-    sourceCodes: {
-    id: number
-    name: string
-    description: string
-    code: string[]
-    codeComment: string[]
-    }[]
-  }
+  read: Array<State['create']>
   game: {
-    typedCode: string
-    remainingCode: string
+    cursorPos: {row: number, col: number}
+    gameOver: boolean
   }
 }
 
@@ -33,12 +25,10 @@ export const initialState: State = {
     code: [''],
     codeComment: [''],
   },
-  read: {
-    sourceCodes: []
-  },
+  read: [],
   game: {
-    typedCode: '',
-    remainingCode: ''
+    cursorPos: {row: 0, col: 0},
+    gameOver: false
   }
 }
 
@@ -50,6 +40,6 @@ export const Actions = {
   setCode: actionCreator<string[]>('ACTION_SET_CREATE_CODE'),
   setCodeComment: actionCreator<string[]>('ACTION_SET_CREATE_CODE_COMMENT'),
   createGame: actionCreator<State['create']>('ACTION_CREATE_GAEM'),
-  setTypedCode: actionCreator<string>('ACTION_SET_TYPED_CODE'),
-  setRemainingCode: actionCreator<string>('ACTION_SET_REMAINING_CODE')
+  setCursorPos: actionCreator<State['game']['cursorPos']>('ACTION_SET_CURSOR_POS'),
+  setGameOver: actionCreator<boolean>('ACTION_SET_GAME_OVER')
 }
