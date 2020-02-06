@@ -2,6 +2,7 @@ import React from 'react'
 
 interface OwnProps {
   codeComment: string[]
+  typingRow: number
 }
 
 type Props = OwnProps
@@ -11,7 +12,7 @@ export const GameComment: React.FC<Props> = props => {
     display: 'inline-block',
     width: '50%',
     verticalAlign: 'top',
-    color: 'white',
+    color: 'gray',
   }
 
   const styleNum: React.CSSProperties = {
@@ -21,10 +22,18 @@ export const GameComment: React.FC<Props> = props => {
     color: 'gray'
   }
 
+  const typingRowStyle = (index: number):React.CSSProperties => {
+    if (props.typingRow === index) {
+      return { color: 'white' }
+    } else {
+      return {}
+    }
+  }
+
   const jsxElem = (cr: string, line: string, index: number) => (
     <React.Fragment key={index}>
       <span style={styleNum}>{1 + index + "   "}</span>
-      <span>{line + cr}</span>
+      <span style={typingRowStyle(index)}>{line + cr}</span>
     </React.Fragment>
   )
 
