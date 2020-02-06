@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useCallback } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { RouteComponentProps } from 'react-router-dom'
 import { AppState } from '../../Store'
@@ -25,10 +25,17 @@ const GameContainer: React.FC<Props> = props => {
   const gameOver = useSelector<AppState, boolean>((appState) => appState.state.game.gameOver)
 
   const dispatch = useDispatch()
-  const handleSetCursorPos = (cursorPos: AppState['state']['game']['cursorPos']) => {
-    dispatch(Actions.setCursorPos(cursorPos))
-  }
-  const handleSetGameOver = (gameOver: boolean) => dispatch(Actions.setGameOver(gameOver))
+  const handleSetCursorPos = useCallback(
+    (cursorPos: AppState['state']['game']['cursorPos']) => dispatch(Actions.setCursorPos(cursorPos)), [dispatch]
+  )
+  const handleSetGameOver = useCallback(
+    (gameOver: boolean) => dispatch(Actions.setGameOver(gameOver)), [dispatch]
+  )
+
+  useEffect(() => {
+    handleSetCursorPos({row: 0, col: 0})
+    handleSetGameOver(false)
+  }, [handleSetGameOver, handleSetCursorPos])
 
   const divStyle: React.CSSProperties = {
     display: 'inline-block',
