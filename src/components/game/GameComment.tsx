@@ -3,6 +3,7 @@ import React from 'react'
 interface OwnProps {
   codeComment: string[]
   typingRow: number
+  gameOver: boolean
 }
 
 type Props = OwnProps
@@ -19,14 +20,18 @@ export const GameComment: React.FC<Props> = props => {
     display: 'inline-block',
     textAlign: 'right',
     minWidth: '60px',
-    color: 'gray'
+    color: '#607D8B'
   }
 
   const typingRowStyle = (index: number):React.CSSProperties => {
-    if (props.typingRow === index) {
-      return { color: 'white' }
+    if (!props.gameOver) {
+      if (props.typingRow === index) {
+        return { color: 'white' }
+      } else {
+        return {}
+      }
     } else {
-      return {}
+      return { color: 'white' }
     }
   }
 

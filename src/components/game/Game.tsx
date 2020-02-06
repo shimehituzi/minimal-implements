@@ -73,7 +73,7 @@ export const Game: React.FC<Props> = props => {
     display: 'inline-block',
     textAlign: 'right',
     minWidth: '60px',
-    color: 'gray'
+    color: '#607D8B'
   }
 
   const jsxElem = (last: boolean, line: string, index: number) => {
