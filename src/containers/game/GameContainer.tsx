@@ -56,7 +56,11 @@ const GameContainer: React.FC<Props> = props => {
           handleSetCursorPos={handleSetCursorPos}
           handleSetGameOver={handleSetGameOver}
         />
-        <GameComment codeComment={codeComment}/>
+        <GameComment
+          codeComment={codeComment}
+          typingRow={cursorPos.row}
+          gameOver={gameOver}
+        />
       </div>
     </React.Fragment>
   )
