@@ -22,8 +22,16 @@ export const Game: React.FC<Props> = props => {
   const isEnter = (e: React.KeyboardEvent, cursorChar: string) => {
     return (e.key === 'Enter' && cursorChar === '')
   }
+
+  const lastLineEmpty = props.typingCode.slice(-1)[0] === ''
+
+  const lastline = {
+    row: props.typingCode.length-1, 
+    col: props.typingCode.slice(-1)[0].length-1
+  }
+
   const isGameOver = () => (
-    props.cursorPos.row === props.typingCode.length-1 && props.cursorPos.col === props.typingCode.slice(-1)[0].length-1
+    props.cursorPos.row === lastline.row && props.cursorPos.col === lastline.col
   )
 
   const onSetCursorPosFunc = (e: React.KeyboardEvent<HTMLPreElement>) => {
@@ -41,6 +49,10 @@ export const Game: React.FC<Props> = props => {
             row: props.cursorPos.row+1,
             col: 0
           })
+          if (lastLineEmpty && props.cursorPos.row === lastline.row -1) {
+            props.handleSetGameOver(true)
+            alert('Finish')
+          }
         }
         if (isGameOver()) {
           props.handleSetGameOver(true)
@@ -64,40 +76,44 @@ export const Game: React.FC<Props> = props => {
     color: 'gray'
   }
 
-  const jsxElem = (cr: string, line: string, index: number) => {
+  const jsxElem = (last: boolean, line: string, index: number) => {
     const row = props.cursorPos.row
     const col = props.cursorPos.col
     if (row > index) {
       return (
         <React.Fragment key={index}>
           <span style={styleNum}>{1 + index + "   "}</span>
-          <span style={{color: 'white'}}>{line + cr}</span>
+          <span style={{color: 'white'}}>{line}</span>
+          <span>{last ? '' : '\n'}</span>
         </React.Fragment>
       )
     } else if( row === index ) {
       const beforeWords = line.slice(0, col)
-      const cursorChar = line.slice(col, col+1)
+      const maybeCC = line.slice(col, col+1)
+      const cursorChar = maybeCC === "" && !last ? '↵' : maybeCC
       const afterWords = line.slice(col+1)
       return (
         <React.Fragment key={index}>
           <span style={styleNum}>{1 + index + "   "}</span>
           <span style={{color: 'white'}}>{beforeWords}</span>
           <span style={{color: 'black', background: 'yellow'}}>{cursorChar}</span>
-          <span style={{color: 'gray'}}>{afterWords + cr}</span>
+          <span style={{color: 'gray'}}>{afterWords}</span>
+          <span>{last ? '' : '\n'}</span>
         </React.Fragment>
       )
     } else {
       return (
         <React.Fragment key={index}>
           <span style={styleNum}>{1 + index + "   "}</span>
-          <span style={{color: 'gray'}}>{line + cr}</span>
+          <span style={{color: 'gray'}}>{line}</span>
+          <span>{last ? '' : '\n'}</span>
         </React.Fragment>
       )
     }
   }
 
   const mappingFunc = (line: string, index: number, arr: string[]) => {
-    return arr.length-1 === index ? jsxElem('', line, index) : jsxElem('\n', line, index)
+    return arr.length-1 === index ? jsxElem(true, line, index) : jsxElem(false, line, index)
   }
 
   return (
