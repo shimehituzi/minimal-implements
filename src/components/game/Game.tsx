@@ -22,20 +22,6 @@ export const Game: React.FC<Props> = props => {
   const isEnter = (e: React.KeyboardEvent, cursorChar: string) => {
     return (e.key === 'Enter' && cursorChar === '')
   }
-
-  // const isTab = (e: React.KeyboardEvent, cursorChar: string) => {
-  //   return (e.key === 'Tab' && cursorChar === ' ')
-  // }
-
-  // const spaceCounter = (text: string, count: number): number => {
-  //   if (count >= 64) return count
-  //   if (text.slice(0, 1) === ' ') {
-  //     return spaceCounter(text.slice(1), count + 1)
-  //   } else {
-  //     return count
-  //   }
-  // }
-
   const isGameOver = () => (
     props.cursorPos.row === props.typingCode.length-1 && props.cursorPos.col === props.typingCode.slice(-1)[0].length-1
   )
@@ -43,7 +29,6 @@ export const Game: React.FC<Props> = props => {
   const onSetCursorPosFunc = (e: React.KeyboardEvent<HTMLPreElement>) => {
     if (!props.gameOver) {
       const cursorChar = getCursorChar()
-      // if (e.key === cursorChar || isEnter(e, cursorChar) || isTab(e, cursorChar)) {
       if (e.key === cursorChar || isEnter(e, cursorChar) ) {
         e.preventDefault()
         if (e.key.match(/^[\x20-\x7e]$/) !== null) {
@@ -56,11 +41,6 @@ export const Game: React.FC<Props> = props => {
             row: props.cursorPos.row+1,
             col: 0
           })
-        // } else if (e.key === 'Tab') {
-        //   props.handleSetCursorPos({
-        //     row: props.cursorPos.row + count,
-        //     col: props.cursorPos.col
-        //   })
         }
         if (isGameOver()) {
           props.handleSetGameOver(true)
