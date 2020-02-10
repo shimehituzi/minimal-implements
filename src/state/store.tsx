@@ -1,15 +1,11 @@
 import { createStore, combineReducers } from 'redux'
 import { State } from './datas/state'
-import * as reducers from './datas'
+import { reducers } from './datas/reducers'
 
 export type AppState = State
 
 const store = createStore(
-  combineReducers<AppState>({
-    gameForm: reducers.gameFormReducer,
-    gameList: reducers.gameListReducer,
-    gameData: reducers.gameDataReducer
-  })
+  combineReducers<AppState>(reducers)
 )
 
 export default store

@@ -1,6 +1,6 @@
 import { reducerWithInitialState } from 'typescript-fsa-reducers'
 import { actions } from './actions'
-import { actions as gameListActions } from '../gameList/actions'
+import { gameListActions } from '../gameList'
 import { initialState } from './state'
 
 const reducer = reducerWithInitialState(initialState)
