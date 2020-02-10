@@ -37,6 +37,9 @@ export const CreateGame: React.FC<Props> = props => {
         <CodeForm { ..._props }/>
         <CodeCommentForm { ..._props }/>
       </div>
+      <label>
+        <input type='submit' value="create"/>
+      </label>
     </form>
   )
 }

@@ -1,7 +1,10 @@
 import React from 'react'
+import CreateGameContainer from '../../containers/CreateGameContainer'
 
 export const Home: React.FC = () => {
   return (
-    <div>this is home</div>
+    <React.Fragment>
+      <CreateGameContainer />
+    </React.Fragment>
   )
 }

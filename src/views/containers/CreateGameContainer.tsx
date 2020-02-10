@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { State } from '../State'
 import { gameFormActions } from '../../state/datas/gameForm'
@@ -9,11 +9,11 @@ const CreateGameContainer: React.FC = () => {
   const gameFormInput = useSelector<State, State['gameForm']>( state => state.gameForm )
 
   const dispatch = useDispatch()
-  const handleSetGameFormInput = (
-    (formInput: State['gameForm']) => dispatch(gameFormActions.setGameFormInput(formInput))
+  const handleSetGameFormInput = useCallback(
+    (formInput: State['gameForm']) => dispatch(gameFormActions.setGameFormInput(formInput)), [dispatch]
   )
-  const handleCreateNewGame = (
-    (formInput: State['gameForm']) => dispatch(gameListActions.createNewGame(formInput))
+  const handleCreateNewGame = useCallback(
+    (formInput: State['gameForm']) => dispatch(gameListActions.createNewGame(formInput)), [dispatch]
   )
 
   const _props = { gameFormInput, handleSetGameFormInput, handleCreateNewGame }
