@@ -1,9 +1,10 @@
 import { actionCreatorFactory } from 'typescript-fsa'
+import { AppState } from '../../store'
 
 const actionCreator = actionCreatorFactory()
 
 export const actions = {
-  setValue: actionCreator<string>('ACTION_SET_VALUE')
+  createNewGame: actionCreator<AppState['gameForm']>('CREATE_NEW_GAME')
 }
 
 export default actions
