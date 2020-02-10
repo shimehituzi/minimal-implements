@@ -4,10 +4,7 @@ import { initialState } from './state'
 
 const reducer = reducerWithInitialState(initialState)
   .case(actions.createNewGame, (state, formInput) => {
-    return {
-      ...state,
-      gameList: [ ...state.gameList, formInput ]
-    }
+    return [ ...state, formInput ]
   })
 
 export default reducer
