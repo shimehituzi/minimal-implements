@@ -1,14 +1,14 @@
 import React from 'react'
-import { State } from '../../Actions'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
+import { State } from '../../State'
 
-interface OwnProps {
-  sourceCodes: State['read']
+type OwnProps = {
+  gameList: State['gameList']
 }
 
 type Props = OwnProps
 
-export const Read: React.FC<Props> = props => {
+export const GameList: React.FC<Props> = props => {
   const headStyle: React.CSSProperties = {
     margin: 20,
     marginBottom: 0,
@@ -21,7 +21,7 @@ export const Read: React.FC<Props> = props => {
 
   return (
     <React.Fragment>
-      { props.sourceCodes.map((val) => {
+      { props.gameList.map((val) => {
         return (
           <div key={val.id} style={{backgroundColor: "#FFFDE7", borderRadius: 30, margin: 20}}>
             <Link to={'/Game/' + val.id}><h3 style={headStyle}>{val.name}</h3></Link>

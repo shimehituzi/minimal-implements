@@ -1,33 +1,37 @@
 import React from 'react'
-import { AppState } from '../../Store'
+import { State } from '../../State'
 
-interface OwnProps {
-  typingCode: string[]
-  cursorPos: AppState['state']['game']['cursorPos']
-  gameOver: boolean
+type OwnProps = {
+  code: State['gameForm']['code']
+  cursorPos: State['gameData']['cursorPos']
+  gameOver: State['gameData']['gameOver']
 }
 
-interface Handler {
-  handleSetCursorPos: Function
-  handleSetGameOver: Function
+type Handler = {
+  handleSetCursorPos: (
+    (cursorPos: State['gameData']['cursorPos']) => void
+  )
+  handleSetGameOver: (
+    (gameOver: State['gameData']['gameOver']) => void
+  )
 }
 
 type Props = OwnProps & Handler
 
-export const Game: React.FC<Props> = props => {
+export const Code: React.FC<Props> = props => {
   const getCursorChar = () => (
-    props.typingCode[props.cursorPos.row].slice(props.cursorPos.col, props.cursorPos.col+1)
+    props.code[props.cursorPos.row].slice(props.cursorPos.col, props.cursorPos.col+1)
   )
 
   const isEnter = (e: React.KeyboardEvent, cursorChar: string) => {
     return (e.key === 'Enter' && cursorChar === '')
   }
 
-  const lastLineEmpty = props.typingCode.slice(-1)[0] === ''
+  const lastLineEmpty = props.code.slice(-1)[0] === ''
 
   const lastline = {
-    row: props.typingCode.length-1, 
-    col: props.typingCode.slice(-1)[0].length-1
+    row: props.code.length-1, 
+    col: props.code.slice(-1)[0].length-1
   }
 
   const isGameOver = () => (
@@ -118,7 +122,7 @@ export const Game: React.FC<Props> = props => {
 
   return (
     <pre tabIndex={0} style={preStyle} onKeyDown={onSetCursorPosFunc}>
-      { props.typingCode.map((v, i, a) => mappingFunc(v, i, a)) }
+      { props.code.map((v, i, a) => mappingFunc(v, i, a)) }
     </pre>
   )
 }

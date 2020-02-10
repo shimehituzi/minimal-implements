@@ -1,14 +1,15 @@
 import React from 'react'
+import { State } from '../../State'
 
-interface OwnProps {
-  codeComment: string[]
-  typingRow: number
-  gameOver: boolean
+type OwnProps = {
+  codeComment: State['gameForm']['codeComment']
+  typingRow: State['gameData']['cursorPos']['row']
+  gameOver: State['gameData']['gameOver']
 }
 
 type Props = OwnProps
 
-export const GameComment: React.FC<Props> = props => {
+export const CodeComment: React.FC<Props> = props => {
   const preStyle: React.CSSProperties = {
     display: 'inline-block',
     width: '50%',
