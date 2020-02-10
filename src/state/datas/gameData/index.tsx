@@ -1,5 +1,5 @@
-import data1Reducer from './reducers'
+import gameDataReducer from './reducers'
 
-export { default as data1Actions } from './actions'
+export { default as gameDataActions } from './actions'
 
-export default data1Reducer
+export default gameDataReducer

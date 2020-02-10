@@ -7,7 +7,8 @@ export type AppState = State
 const store = createStore(
   combineReducers<AppState>({
     gameForm: reducers.gameFormReducer,
-    gameList: reducers.gameListReducer
+    gameList: reducers.gameListReducer,
+    gameData: reducers.gameDataReducer
   })
 )
 

@@ -1,9 +1,11 @@
 export type State = {
-  value: string
+  cursorPos: { row: number, col: number }
+  gameOver: boolean
 }
 
 export const initialState: State = {
-  value: ''
+  cursorPos: { row: 0, col: 0 },
+  gameOver: false
 }
 
 export default State

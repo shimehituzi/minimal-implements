@@ -1,9 +1,11 @@
 import { actionCreatorFactory } from 'typescript-fsa'
+import { State } from './state'
 
 const actionCreator = actionCreatorFactory()
 
 export const actions = {
-  setValue: actionCreator<string>('ACTION_SET_VALUE')
+  setCursorPos: actionCreator<State['cursorPos']>('SET_CURSOR_POS'),
+  setGameOver: actionCreator<State['gameOver']>('SET_GAME_OVER')
 }
 
 export default actions
