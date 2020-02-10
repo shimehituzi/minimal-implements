@@ -1,11 +1,7 @@
 import { AppState } from '../../store'
 
-export type State = {
-  gameList: (Array<AppState['gameForm']>)
-}
+export type State = (Array<AppState['gameForm']>)
 
-export const initialState: State = {
-  gameList: []
-}
+export const initialState: State = []
 
 export default State

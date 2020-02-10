@@ -9,8 +9,7 @@ const reducer = reducerWithInitialState(initialState)
   })
   .case(gameListActions.createNewGame, (state, _) => {
     return {
-      ...state,
-      initialState,
+      ...initialState,
       id: state.id + 1
     }
   })
