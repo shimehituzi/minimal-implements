@@ -4,10 +4,10 @@ import { CodeComment } from './CodeComment'
 import { State } from '../../State'
 
 type Alias = {
-  code: State['games']['games'][0]['code']
-  codeComment: State['games']['games'][0]['codeComment']
-  cursorPos: State['gameParams']['game']['cursorPos']
-  gameOver: State['gameParams']['game']['gameOver']
+  code: State['gameParams']['game']['code']
+  codeComment: State['gameParams']['game']['codeComment']
+  cursorPos: State['gameParams']['params']['cursorPos']
+  gameOver: State['gameParams']['params']['gameOver']
 }
 
 type OwnProps = {

@@ -2,9 +2,9 @@ import React from 'react'
 import { State } from '../../State'
 
 type Alias = {
-  code: State['games']['games'][0]['code']
-  cursorPos: State['gameParams']['game']['cursorPos']
-  gameOver: State['gameParams']['game']['gameOver']
+  code: State['gameParams']['game']['code']
+  cursorPos: State['gameParams']['params']['cursorPos']
+  gameOver: State['gameParams']['params']['gameOver']
 }
 
 type OwnProps = {
