@@ -3,11 +3,15 @@ import { useSelector } from 'react-redux'
 import { State } from '../State'
 import { GameList } from '../components/gameList/GameList'
 
+type Alias = {
+  games: State['games']['games']
+}
+
 const GameListContainer: React.FC = () => {
-  const gameList = useSelector<State, State['gameList']>( state => state.gameList )
+  const games = useSelector<State, Alias['games']>( state => state.games.games )
 
   return (
-    <GameList gameList={gameList}/>
+    <GameList games={games}/>
   )
 }
 
