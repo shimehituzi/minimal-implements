@@ -1,13 +1,17 @@
 import React from 'react'
 import { State } from '../../State'
 
+type Alias = {
+  form: State['games']['form']
+}
+
 type OwnProps = {
-  gameFormInput: State['gameForm']
+  form: Alias['form']
 }
 
 type Handler = {
-  handleSetGameFormInput: (
-    (gameFormInput: State['gameForm']) => void
+  handleSetForm: (
+    (form: Alias['form']) => void
   )
 }
 
@@ -18,17 +22,12 @@ export const BasicForm: React.FC<Props> = props => {
     if (e.key === 'Enter') e.preventDefault()
   }
 
-  const onSetNameFunc = (e: React.ChangeEvent<HTMLInputElement>) => {
-    props.handleSetGameFormInput({
-      ...props.gameFormInput,
-      name: e.target.value
-    })
-  }
-
-  const onSetDescriptionFunc = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    props.handleSetGameFormInput({
-      ...props.gameFormInput,
-      description: e.target.value
+  const onChangeFunc = (
+    e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
+    props.handleSetForm({
+      ...props.form,
+      [e.target.id]: e.target.value
     })
   }
 
@@ -36,12 +35,12 @@ export const BasicForm: React.FC<Props> = props => {
     <React.Fragment>
       <label>
         Name: <br/>
-        <input type="text" value={props.gameFormInput.name} onChange={onSetNameFunc} onKeyDown={onKeyDownFunc} size={40}/>
+        <input type="text" id="name" value={props.form.name} onChange={onChangeFunc} onKeyDown={onKeyDownFunc} size={40}/>
       </label>
       <br/>
       <label>
         Description: <br/>
-        <textarea value={props.gameFormInput.description} onChange={onSetDescriptionFunc} cols={100} rows={20}/>
+        <textarea id="description" value={props.form.description} onChange={onChangeFunc} cols={100} rows={20}/>
       </label>
     </React.Fragment>
   )

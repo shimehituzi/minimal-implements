@@ -2,13 +2,17 @@ import React from 'react'
 import Editor from 'react-ace'
 import { State } from '../../State'
 
+type Alias = {
+  form: State['games']['form']
+}
+
 type OwnProps = {
-  gameFormInput: State['gameForm']
+  form: Alias['form']
 }
 
 type Handler = {
-  handleSetGameFormInput: (
-    (gameFormInput: State['gameForm']) => void
+  handleSetForm: (
+    (form: Alias['form']) => void
   )
 }
 
@@ -16,13 +20,13 @@ type Props = OwnProps & Handler
 
 export const CodeCommentForm:React.FC<Props> = props => {
   const onChangeFunc = (inputVal: string) => {
-    props.handleSetGameFormInput({
-      ...props.gameFormInput,
+    props.handleSetForm({
+      ...props.form,
       codeComment: inputVal.split('\n')
     })
   }
 
-  const value: string = props.gameFormInput.codeComment.join('\n')
+  const value: string = props.form.codeComment.join('\n')
 
   return (
     <Editor onChange={onChangeFunc} value={value} style={{display: 'inline-block', width: '50%'}}/>

@@ -2,13 +2,17 @@ import React from 'react'
 import Editor from 'react-ace'
 import { State } from '../../State'
 
+type Alias = {
+  form: State['games']['form']
+}
+
 type OwnProps = {
-  gameFormInput: State['gameForm']
+  form: Alias['form']
 }
 
 type Handler = {
-  handleSetGameFormInput: (
-    (gameFormInput: State['gameForm']) => void
+  handleSetForm: (
+    (form: Alias['form']) => void
   )
 }
 
@@ -17,7 +21,7 @@ type Props = OwnProps & Handler
 export const CodeForm: React.FC<Props> = props => {
 
   const connectAsciiSouceCode = (lines: string[], row: number, col: number):string[] => {
-    const value = props.gameFormInput.code
+    const value = props.form.code
     const beforewords: string = value.slice(row, row + 1)[0].slice(0, col)
     const afterwords: string = value.slice(row, row + 1)[0].slice(col)
     const beforelines: string[] = value.slice(0, row)
@@ -38,8 +42,8 @@ export const CodeForm: React.FC<Props> = props => {
     if (event.action === 'insert') {
       const lines :string[] = event.lines
       if (lines.every((str) => str.match(/^[\n\x20-\x7e]*$/) !== null)) {
-        props.handleSetGameFormInput({
-          ...props.gameFormInput,
+        props.handleSetForm({
+          ...props.form,
           code: inputVal.split('\n')
         })
       } else {
@@ -48,8 +52,8 @@ export const CodeForm: React.FC<Props> = props => {
         )})
         const row: number = event.start.row
         const col: number = event.start.column
-        props.handleSetGameFormInput({
-          ...props.gameFormInput,
+        props.handleSetForm({
+          ...props.form,
           code: connectAsciiSouceCode(asciiLines, row, col)
         })
         alert(
@@ -59,14 +63,14 @@ export const CodeForm: React.FC<Props> = props => {
       }
     }
     if (event.action === 'remove') {
-      props.handleSetGameFormInput({
-        ...props.gameFormInput,
+      props.handleSetForm({
+        ...props.form,
         code: inputVal.split('\n')
       })
     }
   }
 
-  const value = props.gameFormInput.code.join('\n')
+  const value = props.form.code.join('\n')
 
   return (
     <Editor onChange={onChangeFunc} value={value} style={{display: 'inline-block', width: '50%'}}/>

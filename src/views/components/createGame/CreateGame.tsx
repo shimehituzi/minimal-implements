@@ -4,16 +4,21 @@ import { BasicForm } from './BasicForm'
 import { CodeForm } from './CodeForm'
 import { CodeCommentForm } from './CodeCommentForm'
 
+type Alias = {
+  form: State['games']['form']
+  formWithID: State['games']['games'][0]
+}
+
 type OwnProps = {
-  gameFormInput: State['gameForm']
+  form: Alias['form']
 }
 
 type Handler = {
-  handleSetGameFormInput: (
-    (gameFormInput: State['gameForm']) => void
+  handleSetForm: (
+    (form: Alias['form']) => void
   )
-  handleCreateNewGame: (
-    (gameFormInput: State['gameForm']) => void
+  handleCreateGame: (
+    (formWithID: Alias['formWithID']) => void
   )
 }
 
@@ -22,12 +27,15 @@ type Props = OwnProps & Handler
 export const CreateGame: React.FC<Props> = props => {
   const onCreateNewGameFunc = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    props.handleCreateNewGame(props.gameFormInput)
+    props.handleCreateGame({
+      ...props.form,
+      id: (new Date()).getTime()
+    })
   }
 
   const _props = {
-    gameFormInput: props.gameFormInput,
-    handleSetGameFormInput: props.handleSetGameFormInput
+    form: props.form,
+    handleSetForm: props.handleSetForm
   }
 
   return (

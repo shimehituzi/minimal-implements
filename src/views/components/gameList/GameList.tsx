@@ -2,8 +2,12 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { State } from '../../State'
 
+type Alias = {
+  games: State['games']['games']
+}
+
 type OwnProps = {
-  gameList: State['gameList']
+  games: Alias['games']
 }
 
 type Props = OwnProps
@@ -21,7 +25,7 @@ export const GameList: React.FC<Props> = props => {
 
   return (
     <React.Fragment>
-      { props.gameList.map((val) => {
+      { props.games.map((val) => {
         return (
           <div key={val.id} style={{backgroundColor: "#FFFDE7", borderRadius: 30, margin: 20}}>
             <Link to={'/Game/' + val.id}><h3 style={headStyle}>{val.name}</h3></Link>
