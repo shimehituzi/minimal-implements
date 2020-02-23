@@ -46,12 +46,15 @@ const GameContainer: React.FC<Props> = props => {
   const handleGetGames = useCallback(
     () => dispatch(gamesOperations.getGames()), [dispatch]
   )
+  const isGamesEmpty = useCallback(
+    () => games.length === 0, [games]
+  )
 
   useEffect(() => {
     handleSetCursorPos({row: 0, col: 0})
     handleSetGameOver(false)
-    handleGetGames()
-  }, [handleSetGameOver, handleSetCursorPos, handleGetGames])
+    if (isGamesEmpty()) handleGetGames()
+  }, [handleSetGameOver, handleSetCursorPos, handleGetGames, isGamesEmpty])
 
   const _props = {
     code,
