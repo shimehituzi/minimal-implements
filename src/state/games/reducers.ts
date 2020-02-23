@@ -16,5 +16,8 @@ const reducer = reducerWithInitialState(initialState)
       form: initialState.form
     }
   })
+  .case(actions.destroyGame.done, (state, payload) => {
+    return { ...state, games: payload.result }
+  })
 
 export default reducer

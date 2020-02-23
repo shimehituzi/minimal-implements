@@ -6,6 +6,7 @@ import { GameList } from '../components/gameList/GameList'
 
 type Alias = {
   games: State['games']['games']
+  id: State['games']['games'][0]['id']
 }
 
 const GameListContainer: React.FC = () => {
@@ -15,13 +16,18 @@ const GameListContainer: React.FC = () => {
   const handleGetGames = useCallback(
     () => dispatch(gamesOperations.getGames()), [dispatch]
   )
+  const handleDestroyGame = useCallback(
+    (games: Alias['games'], id: Alias['id']) => {
+      dispatch(gamesOperations.destroyGame(games, id))
+    }, [dispatch]
+  )
 
   useEffect(() => {
     handleGetGames()
   }, [handleGetGames])
 
   return (
-    <GameList games={games}/>
+    <GameList games={games} handleDestroyGame={handleDestroyGame}/>
   )
 }
 
