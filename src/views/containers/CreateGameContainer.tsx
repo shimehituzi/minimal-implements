@@ -1,22 +1,25 @@
 import React, { useCallback } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { State } from '../State'
-import { gameFormActions } from '../../state/datas/gameForm'
-import { gameListActions } from '../../state/datas/gameList'
+import { gamesActions } from '../../state/games'
 import { CreateGame } from '../components/createGame/CreateGame'
 
 const CreateGameContainer: React.FC = () => {
-  const gameFormInput = useSelector<State, State['gameForm']>( state => state.gameForm )
+  const form = useSelector<State, State['games']['form']>( state => state.games.form )
 
   const dispatch = useDispatch()
-  const handleSetGameFormInput = useCallback(
-    (formInput: State['gameForm']) => dispatch(gameFormActions.setGameFormInput(formInput)), [dispatch]
+  const handleSetForm = useCallback(
+    (form: State['games']['form']) => {
+      dispatch(gamesActions.setForm(form))
+    }, [dispatch]
   )
-  const handleCreateNewGame = useCallback(
-    (formInput: State['gameForm']) => dispatch(gameListActions.createNewGame(formInput)), [dispatch]
+  const handleCreateGame = useCallback(
+    (formWithID: State['games']['games'][0]) => {
+      dispatch(gamesActions.createGame(formWithID))
+    }, [dispatch]
   )
 
-  const _props = { gameFormInput, handleSetGameFormInput, handleCreateNewGame }
+  const _props = { form, handleSetForm, handleCreateGame }
 
   return (
     <CreateGame { ..._props } />
