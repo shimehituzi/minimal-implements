@@ -2,13 +2,17 @@ import React from 'react'
 import Editor from 'react-ace'
 import { State } from '../../State'
 
-type OwnProps = {
+type Alias = {
   form: State['games']['form']
+}
+
+type OwnProps = {
+  form: Alias['form']
 }
 
 type Handler = {
   handleSetForm: (
-    (form: State['games']['form']) => void
+    (form: Alias['form']) => void
   )
 }
 

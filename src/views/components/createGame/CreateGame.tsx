@@ -4,16 +4,21 @@ import { BasicForm } from './BasicForm'
 import { CodeForm } from './CodeForm'
 import { CodeCommentForm } from './CodeCommentForm'
 
-type OwnProps = {
+type Alias = {
   form: State['games']['form']
+  formWithID: State['games']['games'][0]
+}
+
+type OwnProps = {
+  form: Alias['form']
 }
 
 type Handler = {
   handleSetForm: (
-    (form: State['games']['form']) => void
+    (form: Alias['form']) => void
   )
   handleCreateGame: (
-    (formWithID: State['games']['games'][0]) => void
+    (formWithID: Alias['formWithID']) => void
   )
 }
 
