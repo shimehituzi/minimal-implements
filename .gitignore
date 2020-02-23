@@ -27,3 +27,6 @@ yarn-error.log*
 
 # npm
 package-lock.json
+
+# db
+/db_json

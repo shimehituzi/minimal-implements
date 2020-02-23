@@ -6,7 +6,6 @@ import { CodeCommentForm } from './CodeCommentForm'
 
 type Alias = {
   form: State['games']['form']
-  formWithID: State['games']['games'][0]
 }
 
 type OwnProps = {
@@ -18,7 +17,7 @@ type Handler = {
     (form: Alias['form']) => void
   )
   handleCreateGame: (
-    (formWithID: Alias['formWithID']) => void
+    (form: Alias['form']) => void
   )
 }
 
@@ -27,10 +26,7 @@ type Props = OwnProps & Handler
 export const CreateGame: React.FC<Props> = props => {
   const onCreateNewGameFunc = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    props.handleCreateGame({
-      ...props.form,
-      id: (new Date()).getTime()
-    })
+    props.handleCreateGame(props.form)
   }
 
   const _props = {
