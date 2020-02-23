@@ -11,8 +11,6 @@ type Alias = {
   gameOver: State['gameParams']['game']['gameOver']
 }
 
-// interface OwnProps extends RouteComponentProps<{id: string}> {}
-
 type OwnProps = RouteComponentProps<{id: string}>
 
 type Props = OwnProps
