@@ -1,12 +1,11 @@
 import React, { useCallback } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { State } from '../State'
-import { gamesActions } from '../../state/games'
+import { gamesActions, gamesOperations } from '../../state/games'
 import { CreateGame } from '../components/createGame/CreateGame'
 
 type Alias = {
   form: State['games']['form']
-  formWithID: State['games']['games'][0]
 }
 
 const CreateGameContainer: React.FC = () => {
@@ -19,8 +18,8 @@ const CreateGameContainer: React.FC = () => {
     }, [dispatch]
   )
   const handleCreateGame = useCallback(
-    (formWithID: Alias['formWithID']) => {
-      dispatch(gamesActions.createGame(formWithID))
+    (form: Alias['form']) => {
+      dispatch(gamesOperations.createGame(form))
     }, [dispatch]
   )
 

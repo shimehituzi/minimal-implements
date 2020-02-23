@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { RouteComponentProps } from 'react-router-dom'
 import { State } from '../State'
 import { gameParamsActions } from '../../state/gameParams'
+import { gamesOperations } from '../../state/games'
 import { Game } from '../components/game/Game'
 
 type Alias = {
@@ -42,11 +43,15 @@ const GameContainer: React.FC<Props> = props => {
       dispatch(gameParamsActions.setGameOver(gameOver))
     }, [dispatch]
   )
+  const handleGetGames = useCallback(
+    () => dispatch(gamesOperations.getGames()), [dispatch]
+  )
 
   useEffect(() => {
     handleSetCursorPos({row: 0, col: 0})
     handleSetGameOver(false)
-  }, [handleSetGameOver, handleSetCursorPos])
+    handleGetGames()
+  }, [handleSetGameOver, handleSetCursorPos, handleGetGames])
 
   const _props = {
     code,

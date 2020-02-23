@@ -5,6 +5,8 @@ import actions from './actions'
 
 type Alias = {
   games: State['games']
+  form: State['form']
+  game: State['games'][0]
 }
 
 const getGames = () => {
@@ -19,6 +21,19 @@ const getGames = () => {
   }
 }
 
+const createGame = (form: Alias['form']) => {
+  return (dispatch: Dispatch, _getState: () => State) => {
+    axios.post('http://localhost:3001/games', { ...form })
+      .then((res) => {
+        dispatch(actions.createGame.done({result: res.data as Alias['game'], params: {}}))
+      })
+      .catch((reason) => {
+        console.log(reason)
+      })
+  }
+}
+
 export default {
   getGames,
+  createGame,
 }
