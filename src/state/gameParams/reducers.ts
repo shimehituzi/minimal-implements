@@ -3,16 +3,22 @@ import { initialState } from './state'
 import actions from './actions'
 
 const reducer = reducerWithInitialState(initialState)
+  .case(actions.getGame.done, (state, payload) => {
+    return {
+      ...state,
+      game: payload.result
+    }
+  })
   .case(actions.setCursorPos, (state, payload) => {
     return {
       ...state,
-      game: { ...state.game, cursorPos: payload }
+      params: { ...state.params, cursorPos: payload }
     }
   })
   .case(actions.setGameOver, (state, payload) => {
     return {
       ...state,
-      game: { ...state.game, gameOver: payload }
+      params: { ...state.params, gameOver: payload }
     }
   })
 

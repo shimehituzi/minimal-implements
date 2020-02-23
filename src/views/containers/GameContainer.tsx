@@ -2,14 +2,14 @@ import React, { useEffect, useCallback } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { RouteComponentProps } from 'react-router-dom'
 import { State } from '../State'
-import { gameParamsActions } from '../../state/gameParams'
-import { gamesOperations } from '../../state/games'
+import { gameParamsActions, gameParamsOperations } from '../../state/gameParams'
 import { Game } from '../components/game/Game'
 
 type Alias = {
-  games: State['games']['games']
-  cursorPos: State['gameParams']['game']['cursorPos']
-  gameOver: State['gameParams']['game']['gameOver']
+  id: State['gameParams']['game']['id']
+  game: State['gameParams']['game']
+  cursorPos: State['gameParams']['params']['cursorPos']
+  gameOver: State['gameParams']['params']['gameOver']
 }
 
 type OwnProps = RouteComponentProps<{id: string}>
@@ -17,22 +17,18 @@ type OwnProps = RouteComponentProps<{id: string}>
 type Props = OwnProps
 
 const GameContainer: React.FC<Props> = props => {
-  const games = useSelector<State, Alias['games']>( state => state.games.games )
+  const id: Alias['id'] = Number(props.match.params.id)
 
-  const maybeCode = games.find(x => x.id === Number(props.match.params.id))?.code
-  const code = maybeCode !== undefined ? maybeCode : ['The source code is not found']
-
-  const maybeComment = games.find(x => x.id === Number(props.match.params.id))?.codeComment
-  const codeComment = maybeComment !== undefined ? maybeComment : ['ソースコードが見つかりませんでした']
-
-  const cursorPos = useSelector<State, Alias['cursorPos']>(
-    state => state.gameParams.game.cursorPos
-  )
-  const gameOver = useSelector<State, Alias['gameOver']>(
-    state => state.gameParams.game.gameOver
-  )
+  const game = useSelector<State, Alias['game']>( state => state.gameParams.game )
+  const cursorPos = useSelector<State, Alias['cursorPos']>( state => state.gameParams.params.cursorPos )
+  const gameOver = useSelector<State, Alias['gameOver']>( state => state.gameParams.params.gameOver )
 
   const dispatch = useDispatch()
+  const handleGetGame = useCallback(
+    (id: Alias['id']) => {
+      dispatch(gameParamsOperations.getGame(id))
+    }, [dispatch]
+  )
   const handleSetCursorPos = useCallback(
     (cursorPos: Alias['cursorPos']) => {
       dispatch(gameParamsActions.setCursorPos(cursorPos))
@@ -43,20 +39,16 @@ const GameContainer: React.FC<Props> = props => {
       dispatch(gameParamsActions.setGameOver(gameOver))
     }, [dispatch]
   )
-  const handleGetGames = useCallback(
-    () => dispatch(gamesOperations.getGames()), [dispatch]
-  )
-
 
   useEffect(() => {
+    handleGetGame(id)
     handleSetCursorPos({row: 0, col: 0})
     handleSetGameOver(false)
-    handleGetGames()
-  }, [handleSetGameOver, handleSetCursorPos, handleGetGames])
+  }, [handleSetGameOver, handleSetCursorPos, handleGetGame, id])
 
   const _props = {
-    code,
-    codeComment,
+    code: game.code,
+    codeComment: game.codeComment,
     cursorPos,
     gameOver,
     handleSetCursorPos,
