@@ -1,10 +1,16 @@
 import React from 'react'
 import { State } from '../../State'
 
+type Alias = {
+  codeComment: State['games']['games'][0]['codeComment']
+  typingRow: State['gameParams']['game']['cursorPos']['row']
+  gameOver: State['gameParams']['game']['gameOver']
+}
+
 type OwnProps = {
-  codeComment: State['gameForm']['codeComment']
-  typingRow: State['gameData']['cursorPos']['row']
-  gameOver: State['gameData']['gameOver']
+  codeComment: Alias['codeComment']
+  typingRow: Alias['typingRow']
+  gameOver: Alias['gameOver']
 }
 
 type Props = OwnProps

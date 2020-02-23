@@ -3,19 +3,26 @@ import { Code } from './Code'
 import { CodeComment } from './CodeComment'
 import { State } from '../../State'
 
+type Alias = {
+  code: State['games']['games'][0]['code']
+  codeComment: State['games']['games'][0]['codeComment']
+  cursorPos: State['gameParams']['game']['cursorPos']
+  gameOver: State['gameParams']['game']['gameOver']
+}
+
 type OwnProps = {
-  code: State['gameForm']['code']
-  codeComment: State['gameForm']['codeComment']
-  cursorPos: State['gameData']['cursorPos']
-  gameOver: State['gameData']['gameOver']
+  code: Alias['code']
+  codeComment: Alias['codeComment']
+  cursorPos: Alias['cursorPos']
+  gameOver: Alias['gameOver']
 }
 
 type Handler = {
   handleSetCursorPos: (
-    (cursorPos: State['gameData']['cursorPos']) => void
+    (cursorPos: Alias['cursorPos']) => void
   )
   handleSetGameOver: (
-    (gameOver: State['gameData']['gameOver']) => void
+    (gameOver: Alias['gameOver']) => void
   )
 }
 

@@ -2,31 +2,47 @@ import React, { useEffect, useCallback } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { RouteComponentProps } from 'react-router-dom'
 import { State } from '../State'
-import { gameDataActions } from '../../state/datas/gameData'
+import { gameParamsActions } from '../../state/gameParams'
 import { Game } from '../components/game/Game'
 
-interface OwnProps extends RouteComponentProps<{id: string}> {}
+type Alias = {
+  games: State['games']['games']
+  cursorPos: State['gameParams']['game']['cursorPos']
+  gameOver: State['gameParams']['game']['gameOver']
+}
+
+// interface OwnProps extends RouteComponentProps<{id: string}> {}
+
+type OwnProps = RouteComponentProps<{id: string}>
 
 type Props = OwnProps
 
 const GameContainer: React.FC<Props> = props => {
-  const gameList = useSelector<State, State['gameList']>( state => state.gameList )
+  const games = useSelector<State, Alias['games']>( state => state.games.games )
 
-  const maybeCode = gameList.find(x => x.id === Number(props.match.params.id))?.code
+  const maybeCode = games.find(x => x.id === Number(props.match.params.id))?.code
   const code = maybeCode !== undefined ? maybeCode : ['The source code is not found']
 
-  const maybeComment = gameList.find(x => x.id === Number(props.match.params.id))?.codeComment
+  const maybeComment = games.find(x => x.id === Number(props.match.params.id))?.codeComment
   const codeComment = maybeComment !== undefined ? maybeComment : ['ソースコードが見つかりませんでした']
 
-  const cursorPos = useSelector<State, State['gameData']['cursorPos']>( state => state.gameData.cursorPos )
-  const gameOver = useSelector<State, State['gameData']['gameOver']>( state => state.gameData.gameOver )
+  const cursorPos = useSelector<State, Alias['cursorPos']>(
+    state => state.gameParams.game.cursorPos
+  )
+  const gameOver = useSelector<State, Alias['gameOver']>(
+    state => state.gameParams.game.gameOver
+  )
 
   const dispatch = useDispatch()
   const handleSetCursorPos = useCallback(
-    (cursorPos: State['gameData']['cursorPos']) => dispatch(gameDataActions.setCursorPos(cursorPos)), [dispatch]
+    (cursorPos: Alias['cursorPos']) => {
+      dispatch(gameParamsActions.setCursorPos(cursorPos))
+    }, [dispatch]
   )
   const handleSetGameOver = useCallback(
-    (gameOver: State['gameData']['gameOver']) => dispatch(gameDataActions.setGameOver(gameOver)), [dispatch]
+    (gameOver: Alias['gameOver']) => {
+      dispatch(gameParamsActions.setGameOver(gameOver))
+    }, [dispatch]
   )
 
   useEffect(() => {

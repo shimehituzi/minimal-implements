@@ -1,18 +1,24 @@
 import React from 'react'
 import { State } from '../../State'
 
+type Alias = {
+  code: State['games']['games'][0]['code']
+  cursorPos: State['gameParams']['game']['cursorPos']
+  gameOver: State['gameParams']['game']['gameOver']
+}
+
 type OwnProps = {
-  code: State['gameForm']['code']
-  cursorPos: State['gameData']['cursorPos']
-  gameOver: State['gameData']['gameOver']
+  code: Alias['code']
+  cursorPos: Alias['cursorPos']
+  gameOver: Alias['gameOver']
 }
 
 type Handler = {
   handleSetCursorPos: (
-    (cursorPos: State['gameData']['cursorPos']) => void
+    (cursorPos: Alias['cursorPos']) => void
   )
   handleSetGameOver: (
-    (gameOver: State['gameData']['gameOver']) => void
+    (gameOver: Alias['gameOver']) => void
   )
 }
 
