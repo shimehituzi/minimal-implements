@@ -1,6 +1,7 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
+import React, { useCallback, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import { State } from '../State'
+import { gamesOperations } from '../../state/games'
 import { GameList } from '../components/gameList/GameList'
 
 type Alias = {
@@ -9,6 +10,15 @@ type Alias = {
 
 const GameListContainer: React.FC = () => {
   const games = useSelector<State, Alias['games']>( state => state.games.games )
+
+  const dispatch = useDispatch()
+  const handleGetGames = useCallback(
+    () => dispatch(gamesOperations.getGames()), [dispatch]
+  )
+
+  useEffect(() => {
+    handleGetGames()
+  }, [handleGetGames])
 
   return (
     <GameList games={games}/>
