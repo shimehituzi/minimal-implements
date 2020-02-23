@@ -7,6 +7,7 @@ type Alias = {
   games: State['games']
   form: State['form']
   game: State['games'][0]
+  id: State['games'][0]['id']
 }
 
 const getGames = () => {
@@ -33,7 +34,21 @@ const createGame = (form: Alias['form']) => {
   }
 }
 
+const destroyGame = (games: Alias['games'], id: Alias['id']) => {
+  return (dispatch: Dispatch, _getState: () => State) => {
+    axios.delete('http://localhost:3001/games/' + id)
+      .then(() => {
+        const newGames = games.filter(elem => elem.id !== id)
+        dispatch(actions.destroyGame.done({result: newGames, params: {}}))
+      })
+      .catch((reason) => {
+        console.log(reason)
+      })
+  }
+}
+
 export default {
   getGames,
   createGame,
+  destroyGame,
 }
