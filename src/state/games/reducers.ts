@@ -21,7 +21,22 @@ const reducer = reducerWithInitialState(initialState)
     return { ...state, games: payload.result }
   })
   .case(actions.setFromType, (state, payload) => {
-    return { ...state, formType: payload }
+    return {
+      ...state,
+      formType: payload,
+      form: {
+        ...initialState.form,
+        id: undefined
+      }
+    }
+  })
+  .case(actions.updateGame.done, (state, payload) => {
+    return {
+      ...state,
+      games: state.games.map(elem => elem.id === payload.result.id ? payload.result : elem),
+      form: initialState.form,
+      formType: initialState.formType
+    }
   })
 
 export default reducer

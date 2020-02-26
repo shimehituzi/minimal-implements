@@ -1,6 +1,7 @@
 import React from 'react'
 import { State } from '../../State'
 import CreateGameContainer from '../../containers/CreateGameContainer'
+import UpdateGameContainer from '../../containers/UpdateGameContainer'
 
 type Alias = {
   formType: State['games']['formType']
@@ -39,7 +40,7 @@ export const FormManager: React.FC<Props> = props => {
       return (
         <React.Fragment>
           <button onClick={onSetFormTypeFunc('Hidden')}>Close</button>
-          <div>ここに Update Form を作る</div>
+          <UpdateGameContainer/>
         </React.Fragment>
       )
   }

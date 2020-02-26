@@ -10,7 +10,7 @@ type FormType = "Hidden" | "Create" | "Update"
 
 type State = {
   games: (Array<Game>)
-  form: (Omit<Game, "id">)
+  form: (Omit<Game, "id"> & Partial<Game>)
   formType: FormType
 }
 
