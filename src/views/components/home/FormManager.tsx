@@ -19,16 +19,28 @@ type Handler = {
 type Props = OwnProps & Handler
 
 export const FormManager: React.FC<Props> = props => {
-  const onCreateFormFunc = () => {
-    props.handleSetFormType("Create")
+  const onSetFormTypeFunc = (formType: Alias['formType']) => () => {
+    props.handleSetFormType(formType)
   }
 
   switch(props.formType) {
     case "Hidden":
-      return <button onClick={onCreateFormFunc}>Create New Game</button>
+      return (
+        <button onClick={onSetFormTypeFunc('Create')}>Create New Game</button>
+      )
     case "Create":
-      return <CreateGameContainer/>
+      return (
+        <React.Fragment>
+          <button onClick={onSetFormTypeFunc('Hidden')}>Close</button>
+          <CreateGameContainer/>
+        </React.Fragment>
+      )
     case "Update":
-      return <div>Update Form をここに作る</div>
+      return (
+        <React.Fragment>
+          <button onClick={onSetFormTypeFunc('Hidden')}>Close</button>
+          <div>ここに Update Form を作る</div>
+        </React.Fragment>
+      )
   }
 }
