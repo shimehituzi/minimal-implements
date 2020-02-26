@@ -47,8 +47,18 @@ const destroyGame = (games: Alias['games'], id: Alias['id']) => {
   }
 }
 
+const updateGame = (form: Required<State['form']>) => {
+  return (dispatch: Dispatch, _getState: () => State) => {
+    axios.put('http://localhost:3001/games/' + form.id, { ...form })
+      .then((res) => {
+        dispatch(actions.updateGame.done({ result: res.data as State['games'][0], params: {} }))
+      })
+  }
+}
+
 export default {
   getGames,
   createGame,
   destroyGame,
+  updateGame,
 }

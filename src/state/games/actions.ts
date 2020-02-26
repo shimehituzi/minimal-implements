@@ -8,6 +8,8 @@ const actions = {
   setForm: actionCreator<State['form']>('SET_FORM'),
   createGame: actionCreator.async<{}, State['games'][0]>('CREATE_GAME'),
   destroyGame: actionCreator.async<{}, State['games']>('DESTROY_GAME'),
+  setFromType: actionCreator<State['formType']>('SET_FORM_TYPE'),
+  updateGame: actionCreator.async<{}, State['games'][0]>('UPDATE_GAME'),
 }
 
 export default actions

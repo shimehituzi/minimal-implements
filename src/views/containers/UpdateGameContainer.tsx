@@ -2,13 +2,13 @@ import React, { useCallback } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { State } from '../State'
 import { gamesActions, gamesOperations } from '../../state/games'
-import { CreateGame } from '../components/gameForm/CreateGame'
+import { UpdateGame } from '../components/gameForm/UpdateGame'
 
 type Alias = {
   form: State['games']['form']
 }
 
-const CreateGameContainer: React.FC = () => {
+const UpdateGameContainer: React.FC = () => {
   const form = useSelector<State, Alias['form']>( state => state.games.form )
 
   const dispatch = useDispatch()
@@ -17,17 +17,17 @@ const CreateGameContainer: React.FC = () => {
       dispatch(gamesActions.setForm(form))
     }, [dispatch]
   )
-  const handleCreateGame = useCallback(
-    (form: Alias['form']) => {
-      dispatch(gamesOperations.createGame(form))
+  const handleUpdateGame = useCallback(
+    (form: Required<Alias['form']>) => {
+      dispatch(gamesOperations.updateGame(form))
     }, [dispatch]
   )
 
-  const _props = { form, handleSetForm, handleCreateGame }
+  const _props = { form, handleSetForm, handleUpdateGame }
 
   return (
-    <CreateGame { ..._props } />
+    <UpdateGame { ..._props } />
   )
 }
 
-export default CreateGameContainer
+export default UpdateGameContainer

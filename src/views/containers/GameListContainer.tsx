@@ -1,11 +1,13 @@
 import React, { useCallback, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { State } from '../State'
-import { gamesOperations } from '../../state/games'
+import { gamesOperations, gamesActions } from '../../state/games'
 import { GameList } from '../components/gameList/GameList'
 
 type Alias = {
   games: State['games']['games']
+  form: State['games']['form']
+  formType: State['games']['formType']
   id: State['games']['games'][0]['id']
 }
 
@@ -13,6 +15,16 @@ const GameListContainer: React.FC = () => {
   const games = useSelector<State, Alias['games']>( state => state.games.games )
 
   const dispatch = useDispatch()
+  const handleSetform = useCallback(
+    (form: Alias['form']) => {
+      dispatch(gamesActions.setForm(form))
+    }, [dispatch]
+  )
+  const handleSetformType = useCallback(
+    (formType: Alias['formType']) => {
+      dispatch(gamesActions.setFromType(formType))
+    }, [dispatch]
+  )
   const handleGetGames = useCallback(
     () => dispatch(gamesOperations.getGames()), [dispatch]
   )
@@ -26,8 +38,10 @@ const GameListContainer: React.FC = () => {
     handleGetGames()
   }, [handleGetGames])
 
+  const _props = { games, handleDestroyGame, handleSetform, handleSetformType }
+
   return (
-    <GameList games={games} handleDestroyGame={handleDestroyGame}/>
+    <GameList { ..._props }/>
   )
 }
 

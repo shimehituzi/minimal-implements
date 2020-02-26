@@ -16,17 +16,18 @@ type Handler = {
   handleSetForm: (
     (form: Alias['form']) => void
   )
-  handleCreateGame: (
-    (form: Alias['form']) => void
+  handleUpdateGame: (
+    (form: Required<Alias['form']>) => void
   )
 }
 
 type Props = OwnProps & Handler
 
-export const CreateGame: React.FC<Props> = props => {
-  const onCreateNewGameFunc = (e: React.FormEvent<HTMLFormElement>) => {
+export const UpdateGame: React.FC<Props> = props => {
+  const onUpdateGameFunc = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    props.handleCreateGame(props.form)
+    if (props.form.id === undefined) return
+    props.handleUpdateGame(props.form as Required<Alias['form']>)
   }
 
   const _props = {
@@ -35,7 +36,7 @@ export const CreateGame: React.FC<Props> = props => {
   }
 
   return (
-    <form onSubmit={onCreateNewGameFunc}>
+    <form onSubmit={onUpdateGameFunc}>
       <BasicForm { ..._props }/>
       <div style={{display: 'inline-block', width: '100%'}}>
         <CodeForm { ..._props }/>
