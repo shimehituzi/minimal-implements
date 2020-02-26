@@ -13,11 +13,15 @@ const reducer = reducerWithInitialState(initialState)
     return {
       ...state,
       games: [ ...state.games, payload.result ],
-      form: initialState.form
+      form: initialState.form,
+      formType: initialState.formType
     }
   })
   .case(actions.destroyGame.done, (state, payload) => {
     return { ...state, games: payload.result }
+  })
+  .case(actions.setFromType, (state, payload) => {
+    return { ...state, formType: payload }
   })
 
 export default reducer

@@ -6,9 +6,12 @@ type Game = {
   codeComment: string[]
 }
 
+type FormType = "Hidden" | "Create" | "Update"
+
 type State = {
   games: (Array<Game>)
   form: (Omit<Game, "id">)
+  formType: FormType
 }
 
 export const initialState: State = {
@@ -18,7 +21,8 @@ export const initialState: State = {
     description: '',
     code: [''],
     codeComment: ['']
-  }
+  },
+  formType: "Hidden"
 }
 
 export default State

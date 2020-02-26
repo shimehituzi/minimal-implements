@@ -2,7 +2,7 @@ import React, { useCallback } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { State } from '../State'
 import { gamesActions, gamesOperations } from '../../state/games'
-import { CreateGame } from '../components/createGame/CreateGame'
+import { CreateGame } from '../components/gameForm/CreateGame'
 
 type Alias = {
   form: State['games']['form']

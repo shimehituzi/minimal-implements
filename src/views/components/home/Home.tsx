@@ -1,13 +1,30 @@
 import React from 'react'
-import CreateGameContainer from '../../containers/CreateGameContainer'
+import { State } from '../../State'
 import GameListContainer from '../../containers/GameListContainer'
+import { FormManager } from './FormManager'
 
-export const Home: React.FC = () => {
+type Alias = {
+  formType: State['games']['formType']
+}
+
+type OwnProps = {
+  formType: Alias['formType']
+}
+
+type Handler = {
+  handleSetFormType: (
+    (formType: Alias['formType']) => void
+  )
+}
+
+type Props = OwnProps & Handler
+
+export const Home: React.FC<Props> = props => {
   return (
     <React.Fragment>
       <GameListContainer />
       <hr/>
-      <CreateGameContainer />
+      <FormManager { ...props }/>
     </React.Fragment>
   )
 }
